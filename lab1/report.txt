@@ -1,0 +1,64 @@
+Sanyam Garg:  2022CS11078, Aneeket Yadav: 2022CS11116
+
+COL333 - Assignmnet 1 : ASR Correction
+==============================
+
+Algorithm Description
+===============
+* Our algorithm is a modification of beam search. Instead of simply selecting the k minimum cost states to be propagated to the next level, we also invoke threshold-based methods to further restrict the number of states. This allows us to restrict both the time and space complexity of the function. We present the following algorithm:
+
+Input
+'''''''''''
+Phoneme table P: {string -> set(string)}
+Vocabulary set V: {string}
+Initial state s_0: sentence, cost, index till which processing has been done so far.
+Cost function C(s): string -> float
+Parameters: α (alpha), β (beta), b (beam width), k (number of best states)
+
+ALGORITHM-PHONEME-REPLACEMENT
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Create a set of all phonemes present in the phoneme table (This is necessary to efficiently check if the phoneme being replaced is one or two characters long, which allows us to replace subsequent phonemes at the correct indices).
+Construct a reverse mapping of the key-value pairs present in the phoneme table (To lookup the possible replacements in the sentence).
+The 'state' has the following attributes: sentence, cost, and index till which the sentence has been processed so far.
+Make the original sentence the root of the tree and explore the nodes (states) level by level. Each levelcorresponds to the processing of a phoneme.
+Explore a node as follows:
+a. Consult the reverse phoneme mapping to find all possible neighbors corresponding to the phoneme being processed.
+b. Accumulate the neighbors for all states in a given level.
+c. Restrict the number of states based on the following heuristic: Retain only those states whose cost is less than (1+α)*(minimum cost among all neighbors).
+d. To further improve time and space complexity, set a beam, i.e., the maximum number of neighbors from the previous operation which may be propagated to the next level.
+Recursively explore the tree level by level.
+When all phonemes have been processed, i.e., when we reach the leaf nodes, choose k best states to be considered for word insertion.
+
+ALGORITHM-WORD-INSERTION
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+1. Since we will have to run this algorithm for each of the k states, and the majority of words in the vocabulary would be irrelevant for insertion, to improve the time complexity of the approach, we do the following:
+	a. Consider the state having minimum cost among the k states in the input.
+	b. Beginning of Sentence (BoS step): One at a time, insert each word in the vocabulary at the beginning of the sentence and find all states within the limit (1+β) of the minimum cost obtained till now. Call these words the BoS vocabulary.
+	c. End of Sentence (EoS step): Build an EoS vocabulary similar to the BoS step above.
+
+2. For each of the remaining inputs:
+	a. One at a time, insert each word in the BoS vocabulary at the beginning of the sentence. Note the new sentence thus formed having the minimum cost, say best_at_BoS.
+	b. One at a time, insert each word in the EoS vocabulary at the end of the sentence. Note the new sentence thus formed having the minimum cost, say best_at_EoS.
+	c. Accumulate best_at_EoS sentences.
+
+3.Return the best_at_EoS sentence with the least cost.
+
+Output
+''''''''''''''
+Corrected sentence s*: string, such that C(s*) is minimized
+
+Complexity Analysis
+==============
+
+Time Complexity
+'''''''''''''''''''''''''''''''''''
+ALGORITHM-PHONEME-REPLACEMENT: O(n * b * d * log(b*d)) , where n is the length of the input string, b is the beam width, d is the maximum number of replacements possible for a phoneme.
+ALGORITHM-WORD-INSERTION: O(k * |V|) , where k is the number of best states, |V| is the size of the vocabulary, and |s| is the average length of a sentence.
+
+Space Complexity
+'''''''''''''''''''''''''''''''''''''
+
+ALGORITHM-PHONEME-REPLACEMENT: O(b * d * n), where b is the beam width, d is the maximum number of replacements possible for a phoneme and n is the length of a sentence.
+ALGORITHM-WORD-INSERTION: O(n), where n is the length of a sentence.
+
+The time and space complexity of the algorithm are significantly improved compared to an exhaustive search, making it more practical for real-world applications while still maintaining a good balance between exploration and exploitation in the search space.

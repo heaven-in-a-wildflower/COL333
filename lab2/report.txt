@@ -1,0 +1,29 @@
+Sanyam Garg:  2022CS11078, Aneeket Yadav: 2022CS11116
+
+COL333 - Assignment 2: GamePlaying AI
+==============================
+
+Algorithm Description
+===============
+* Our core algorithm is a modification of the Monte Carlo Tree Search Algorithm - MCTS with Progressive History. Progressive History addresses the problem that it may take some time to gather enough information to determine a reliable value for a node. Progressive History is a combination of Progressive Bias and the history heuristic. Progressive Bias requires heuristic knowledge. The Progressive Bias part in Progressive History uses W/(n_i − v_i + 1) to bias the history heuristic part pv_i/pn_i.
+pv_i is the summed value of move i for every time i has been played, and pn_i is the total number of times move i has been played. The child k of node p that satisfies is selected for expansion (I is the set of the children of p), whereas ϕ is the Progressive History part:
+
+k ∈ argmax{i∈I}(s_i + C ·√((ln n_p)/n_i)+ ϕ)	...(1)
+ϕ = (pv_i/pn_i)* W/(n_i − v_i + 1)		...(2)
+
+* We have implemented the following optimisations:
+
+Timing optimisations:
+--------------------
+a. In both 4-sided and 6-sided boards, when playing first, the first move is (0,0), as playing the corner is considered an optimal strategy by us.
+b. Plays forced moves as soon as they are detected, the absence of which would lead to the opponent's victory immediately in the next move.
+c. Dynamic number of iterations based on the remaining time
+d. The path compression union-find algorithm for the detection of bridges and forks was found to be helpful in the case of the 6-sided board but not the case of the 4-sided board, and it is thus implemented likewise.
+
+Strategic optimisations:
+-----------------------
+a. Higher weights are placed on virtual connections and neighbours during rollouts.
+b. Increased randomisation in the selection phase to ensure propagation of correct information.
+c. In a 4-sided board, when playing second, the first move is hardcoded to occupy one of the points where the opponent may have formed a virtual connection.  
+d. In a 6-sided board, the first move is hardcoded to occupy corners when playing second.
+
