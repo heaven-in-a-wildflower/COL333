@@ -1,4 +1,4 @@
-#Assignment-2 : Havannah Playing AI agent
+# Assignment-2 : Havannah Playing AI agent
 - For the objective and specification, see [this link](https://lily-molybdenum-65d.notion.site/Assignment-II-GamePlaying-AI-bc7ea2acb0aa4b35a227d9f85861a763)
 
 ## Creating environment
