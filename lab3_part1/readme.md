@@ -10,9 +10,12 @@ We are given a data set consisting of images of different bird species with a to
 - One of the most popular implementation is : [https://github.com/jacobgil/pytorch-grad-cam](https://github.com/jacobgil/pytorch-grad-cam)
 
 ## Training and Evaluation process
+- Please see report for implementation details.
+    ```python
     # Running code for training. save the model in the same directory with name "bird.pth"
     python bird.py path_to_dataset train bird.pth 
     
     # Running code for inference
     python bird.py path_to_dataset test bird.pth
+    ```
 - Dataset link is provided [Here](https://drive.google.com/drive/folders/1CLxNjtoLfV9e678kXr_21wiD_yoxpkDZ?usp=sharing)
