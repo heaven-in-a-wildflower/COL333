@@ -6,6 +6,7 @@
 - Formally, this part of the assignment has two components. First, to train a Variational Autoencoder (VAE) to extract useful features from the images. Then, to use the learnt features for a downstream task like classification in a low-data regime. In particular, we implement a Gaussian Mixture Model (GMM) to cluster the extracted latent representations. Once the clusters are learned,  we can categorise any unseen images by first extracting their features through the trained encoder and assigning a cluster label based on the maximum likelihood.
 
 ## Training and Evaluation
+-Please see report for implementation details.
 ```python
 # Running code for training. save the model in the same directory with name "vae.path**"
 # Save the GMM parameters in the same folder. You can use pickle to save the parameters.** 
