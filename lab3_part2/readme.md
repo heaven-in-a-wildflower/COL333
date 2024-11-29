@@ -8,8 +8,8 @@
 ## Training and Evaluation
 - Please see report for implementation details.
 ```python
-# Running code for training. save the model in the same directory with name "vae.path**"
-# Save the GMM parameters in the same folder. You can use pickle to save the parameters.** 
+# Running code for training. save the model in the same directory with name "vae.path"
+# Save the GMM parameters in the same folder. You can use pickle to save the parameters. 
 python vae.py path_to_train_dataset path_to_val_dataset train vae.pth gmm_params.pkl
 
 # Running code for vae reconstruction.
